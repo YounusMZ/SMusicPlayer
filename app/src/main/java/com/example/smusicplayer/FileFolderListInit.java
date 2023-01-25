@@ -7,11 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FileFolderListInit {
-    private ArrayList<String> folderList = new ArrayList<>();
-    private final ArrayList<String> fileList = new ArrayList<>();
+    private List<String> folderList = new ArrayList<>();
+    private final List<String> fileList = new ArrayList<>();
     private File rootDir;
 
 
@@ -20,11 +21,11 @@ public class FileFolderListInit {
         folderList = readFolderListToStorage();
     }
 
-    public ArrayList<String> getFileList(){
+    public List<String> getFileList(){
         return fileList;
     }
 
-    public ArrayList<String> getFolderList(){
+    public List<String> getFolderList(){
         return folderList;
     }
 
@@ -57,8 +58,8 @@ public class FileFolderListInit {
         }
     }
 
-    private ArrayList<String> readFolderListToStorage(){
-        ArrayList<String> folderList = new ArrayList<>();
+    private List<String> readFolderListToStorage(){
+        List<String> folderList = new ArrayList<>();
         String fileName = "folderslist.txt";
         File directory = new File(rootDir, "data");
         File foldersList = new File(directory, fileName);

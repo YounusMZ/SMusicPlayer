@@ -15,27 +15,26 @@ import com.example.smusicplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.FolderListVIewHolder> {
 
-    private final ArrayList<String> folderListData;
-    private final ArrayList<String> fileListData;
-    private final LayoutInflater layoutInflater;
+    private final List<String> folderListData;
+    private final List<String> fileListData;
     private final MainActivity activity;
 
-    public FolderListAdapter(MainActivity activity, Context context, ArrayList<String> folderList, ArrayList<String> fileList){
+    public FolderListAdapter(MainActivity activity, List<String> folderList, List<String> fileList){
         this.activity = activity;
         this.fileListData = fileList;
         this.folderListData = folderList;
-        this.layoutInflater = LayoutInflater.from(context);
     }
 
 
     @NonNull
     @Override
     public FolderListVIewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.folderlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.folderlist, parent, false);
         return new FolderListVIewHolder(view);
     }
 

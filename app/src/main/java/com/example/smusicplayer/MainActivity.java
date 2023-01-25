@@ -32,6 +32,7 @@ import com.example.smusicplayer.databinding.ActivityMainBinding;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,25 +55,25 @@ public class MainActivity extends AppCompatActivity {
 
         FileFolderListInit fileFolderListInit = new FileFolderListInit();
         fileFolderListInit.setRootDir(this.getFilesDir());
+        List<String> folderList = fileFolderListInit.getFolderList();
+        List<String> fileList = fileFolderListInit.getFileList();
 
-        RecyclerView folderListView;
-        RecyclerView fileListView;
-        FolderListAdapter folderListAdapter;
+        FolderListAdapter folderListAdapter = new FolderListAdapter(this, folderList, fileList);
+        RecyclerView folderListView = findViewById(R.id.folderList);
 
-        folderListAdapter = new FolderListAdapter(this,this, fileFolderListInit.getFolderList(), fileFolderListInit.getFileList());
-        folderListView = findViewById(R.id.folderList);
         folderListView.setLayoutManager(new LinearLayoutManager(this));
         folderListView.setItemAnimator(new DefaultItemAnimator());
         folderListView.setAdapter(folderListAdapter);
 
-        fileListAdapter = new FileListAdapter(this, this, fileFolderListInit.getFileList());
-        fileListView = findViewById(R.id.fileList);
+        fileListAdapter = new FileListAdapter(this, fileList);
+        RecyclerView fileListView = findViewById(R.id.fileList);
+
         fileListView.setLayoutManager(new LinearLayoutManager(this));
         fileListView.setItemAnimator(new DefaultItemAnimator());
         fileListView.setAdapter(fileListAdapter);
 
 
-        addButtonOnClick(folderListAdapter, fileFolderListInit.getFolderList(), fileFolderListInit);
+        addButtonOnClick(folderListAdapter, folderList, fileFolderListInit);
         playButtonOnClick();
         resetButtonOnClick();
         notificationSetUp();
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         return this.fileListAdapter;
     }
 
-    private void addButtonOnClick(FolderListAdapter adapter, ArrayList<String> folderList, FileFolderListInit fileFolderListInit){
+    private void addButtonOnClick(FolderListAdapter adapter, List<String> folderList, FileFolderListInit fileFolderListInit){
         Button addButton = findViewById(R.id.add_button);
         TextView folderName = findViewById(R.id.folderName);
 
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         String description = "Music Player -";
         String channelID = "0";
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int importanceLevel = NotificationManager.IMPORTANCE_LOW;
 
             NotificationChannelCompat channel = new NotificationChannelCompat.Builder(channelID, importanceLevel)
@@ -190,13 +191,12 @@ public class MainActivity extends AppCompatActivity {
         TextView playPauseButton = findViewById(R.id.playbutton);
 
         if (mediaService != null) {
-
-        if(media.isPlaying()){
-            playPauseButton.setText(R.string.Play);
-        }
-        else{
-            playPauseButton.setText(R.string.Pause);
-        }
+            if(media.isPlaying()){
+                playPauseButton.setText(R.string.Play);
+            }
+            else{
+                playPauseButton.setText(R.string.Pause);
+            }
 
         mediaService.Pause(media);
         }

@@ -17,20 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileViewHolder> {
-    private final ArrayList<String> fileList;
+    private final List<String> fileList;
     private final MainActivity activity;
-    private final LayoutInflater layoutInflater;
 
-    public FileListAdapter(MainActivity activity,Context context, ArrayList<String> fileListString){
+    public FileListAdapter(MainActivity activity, List<String> fileListString){
         this.activity = activity;
         this.fileList = fileListString;
-        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public FileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.filelist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.filelist, parent, false);
         return new FileViewHolder(view);
     }
 
